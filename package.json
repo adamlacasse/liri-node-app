@@ -1,8 +1,8 @@
 {
   "name": "10_liri-node-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Language Interpretation and Recognition Interface",
+  "main": "keys.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
