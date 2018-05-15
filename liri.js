@@ -6,14 +6,12 @@ var keys = require('./keys.js');
 
 var Twitter = require('twitter'); 
 var client = new Twitter(keys.twitter);
- 
+  
 var params = {screen_name: 'AwlUnh'};
-client.get('statuses/show/', params, function(error, tweets, response) {
+client.get('statuses/home_timeline', params, function(error, tweets, response) {
+  debugger;
   if (!error) {
     console.log(tweets);
-  } else {console.log("apparently there was an error")}
+  } else {console.log(error)}
 });
-
-
-
 
