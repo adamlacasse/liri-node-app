@@ -15,6 +15,6 @@ inquirer.prompt([
     choices: ["my-tweets", "spotify-this-song", "movie-this", "do-what-it-says"]
   }
 ]).then(function(user) {
-
+    console.log("inquirer loaded");
 });
 
