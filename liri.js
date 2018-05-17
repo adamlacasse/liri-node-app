@@ -59,7 +59,6 @@ function getMovie(movieName) {
       var foundIt = "";
       var tomsRate = JSON.parse(body).Ratings;
       for (i = 0; i < tomsRate.length; i++){
-        // console.log(tomsRate[i]);
         switch(tomsRate[i].Source){
           case "Rotten Tomatoes":
           foundIt = tomsRate[i].Value;
@@ -67,7 +66,6 @@ function getMovie(movieName) {
           default: foundIt = "isn't working right"
         } // end of switch
       } // end of for loop
-      // console.log(foundIt);
 
       console.log("Title: " + JSON.parse(body).Title);
       console.log("Year: " + JSON.parse(body).Year);
@@ -77,6 +75,7 @@ function getMovie(movieName) {
       console.log("Language: " + JSON.parse(body).Language);
       console.log("Plot: " + JSON.parse(body).Plot);
       console.log("Cast: " + JSON.parse(body).Actors);
+
     } else {console.log("Threw a GD error: " + error)}
   }); // end of request
 } // end of getMovie
