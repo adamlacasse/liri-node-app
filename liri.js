@@ -66,7 +66,7 @@ function getMovie(movieName) {
 
     } else {console.log("Threw a GD error: " + error)}
   });
-} // end of getMoive
+} // end of getMovie
 
 var userPicks = function (value1, value2) {
   switch (value1) {
