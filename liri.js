@@ -13,7 +13,7 @@ function getTweets(){
       for(i =0; i < tweets.length; i++){
         console.log(`Tweeted: "${tweets[i].text}" on ${tweets[i].created_at}`);
       }
-    } else {console.log(`the error is: ${error}`)}
+    } else {console.log(`Error is: ${error}`)}
   });
 } // end of getTweets
 
@@ -26,20 +26,25 @@ function getSpotify(songName){
   var spotify = new Spotify(keys.spotify);
   
   spotify.search({ 
-    type: 'track', query: songName }, function(err, data) {
-    if ( err ) {
-        console.log('Error occurred: ' + err);
+    type: 'track', query: songName }, function(error, data) {
+    if (error) {
+        console.log(`Error is: ${error}`);
         return;
     }
-    var songs = data.tracks.items; 
-    for (let i = 0; i < songs.length; i++) {
-        console.log (i);
-        console.log('artist(s): ' + songs[i].artists.map(getArtistNames));
-        console.log('song name: ' + songs[i].name);
-        console.log('preview song: ' + songs[i].preview_url);
-        console.log('album: ' + songs[i].album.name);
-        console.log('-------------------------------------------');
-    }
+    else if (data.tracks.items == null || data.tracks.items == " "){
+      // songName = "The Sign";
+      console.log("it's null-ish");
+    } else {
+        var songs = data.tracks.items; 
+        for (let i = 0; i < songs.length; i++) {
+            console.log (i);
+            console.log(`Artist(s): ${songs[i].artists.map(getArtistNames)}`);
+            console.log(`Song Name: ${songs[i].name}`);
+            console.log(`Preview URL: ${songs[i].preview_url}`);
+            console.log(`Album: ${songs[i].album.name}`);
+            console.log('-------------------------------------------');
+        }
+      }
   });
 } // end of getSpotify
 
