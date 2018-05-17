@@ -1,6 +1,7 @@
 require('dotenv').config();
 var keys = require('./keys.js');
 var request = require('request');
+var fs = require("fs");
 
 
 function getTweets(){
@@ -18,13 +19,14 @@ function getTweets(){
   });
 } // end of getTweets
 
-var getArtistNames = function(artist) {
-  return artist.name;
-}
 
 function getSpotify(songName){
   var Spotify = require('node-spotify-api');
   var spotify = new Spotify(keys.spotify);
+
+  var getArtistNames = function(artist) {
+    return artist.name;
+  }
   
   spotify.search({ 
     type: 'track', query: songName }, function(error, data) {
@@ -46,21 +48,23 @@ function getSpotify(songName){
   });
 } // end of getSpotify
 
+
 function getMovie(movieName) {
-  request('http://wwww.omdapi.com/?t=', function (error, response, body) {
-      if (!error && response.statuscode == 200) {
-          var jsonData = JSON.parse(body);
-          console.log('Title: ' + jsonData.Title);
-          console.log('Year: ' + jsonData.Year);
-          console.log('Rated: '+ jsonData.Rated); 
-          console.log('IMDB Rating: ' + jsonData.imbdRating);
-          console.log('Country: ' + jsonData.Country);
-          console.log('Language' + jsonData.Language); 
-          console.log('Plot: ' + jsonData.Plot);
-          console.log('Actors: ' + jsonData.Actors);
-          console.log('Rotten tomoatoes rating: ' + jsonData.tomatoRating);
-          console.log('Rotten tomatoes URL: ' + jsonData.tomatoURL);
-      } else {console.log("WTF dude?")}
+  var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+  
+  request(queryUrl, function(error, response, body) {
+
+    if (!error && response.statusCode === 200) {
+      console.log("Title: " + JSON.parse(body).Title);
+      console.log("Year: " + JSON.parse(body).Year);
+      console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+      // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings);
+      console.log("Country: " + JSON.parse(body).Country);
+      console.log("Language: " + JSON.parse(body).Language);
+      console.log("Plot: " + JSON.parse(body).Plot);
+      console.log("Cast: " + JSON.parse(body).Actors);
+
+    } else {console.log("Threw a GD error: " + error)}
   });
 } // end of getMoive
 
@@ -74,6 +78,7 @@ var userPicks = function (value1, value2) {
       getSpotify(value2);  
       break;
     case 'movie-this' :
+      if(!value2){value2 = "Mr Nobody"};
       getMovie(value2);
       break; 
     case 'do-what-it-says':
