@@ -1,15 +1,15 @@
-require('dotenv').config();
-var keys = require('./keys.js');
-var request = require('request');
+require("dotenv").config();
+var keys = require("./keys.js");
+var request = require("request");
 var fs = require("fs");
 
 
 function getTweets(){
-  var Twitter = require('twitter'); 
+  var Twitter = require("twitter"); 
   var client = new Twitter(keys.twitter);
     
-  var params = {screen_name: 'AwlUnh'};
-  client.get('statuses/home_timeline', params, function(error, tweets, response) {
+  var params = {screen_name: "AwlUnh"};
+  client.get("statuses/home_timeline", params, function(error, tweets, response) {
     if (!error) {
       console.log("Here are the tweets:");
       for(i =0; i < tweets.length; i++){
@@ -21,15 +21,15 @@ function getTweets(){
 
 
 function getSpotify(songName){
-  var Spotify = require('node-spotify-api');
+  var Spotify = require("node-spotify-api");
   var spotify = new Spotify(keys.spotify);
 
-  var getArtistNames = function(artist) {
+  function getArtistNames(artist) {
     return artist.name;
   }
   
   spotify.search({ 
-    type: 'track', query: songName }, function(error, data) {
+    type: "track", query: songName }, function(error, data) {
     if (error) {
         console.log(`Error is: ${error}`);
         return;
@@ -42,7 +42,7 @@ function getSpotify(songName){
           console.log(`Song Name: ${songs[i].name}`);
           console.log(`Preview URL: ${songs[i].preview_url}`);
           console.log(`Album: ${songs[i].album.name}`);
-          console.log('-------------------------------------------');
+          console.log("-------------------------------------------");
       }
     }
   });
@@ -68,7 +68,20 @@ function getMovie(movieName) {
   });
 } // end of getMovie
 
-var userPicks = function (value1, value2) {
+
+function doWhatItSays() {
+		
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) throw error;
+    var loggedTxt = data.split(",");
+    var command = loggedTxt[0];
+    var parameter = loggedTxt[1];
+    userPicks(command, parameter);
+  });
+} // end of doWhatItSays
+
+
+function userPicks(value1, value2) {
   switch (value1) {
     case 'my-tweets':
       getTweets();
