@@ -15,7 +15,7 @@ function getTweets(){
       for(i =0; i < tweets.length; i++){
         console.log(`Tweeted: "${tweets[i].text}" on ${tweets[i].created_at}`);
       }
-    } else {console.log(`Error is: ${error}`)}
+    } else {console.log(`Error is: ${JSON.stringify(error)}`)}
   });
 } // end of getTweets
 
